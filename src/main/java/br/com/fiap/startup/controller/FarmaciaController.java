@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("farmacias")
-public class FarmaciaResource {
+public class FarmaciaController {
     
     @Autowired
     FarmaciaRepository farmaciaRepository;

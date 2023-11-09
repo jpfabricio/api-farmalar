@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("usuarios")
-public class UsuarioResource {
+public class UsuarioController {
 
     @Autowired
     UsuarioRepository usuarioRepository;
