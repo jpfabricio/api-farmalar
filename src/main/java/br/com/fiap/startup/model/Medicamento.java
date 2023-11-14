@@ -1,11 +1,16 @@
 package br.com.fiap.startup.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "medicamento")
 @SequenceGenerator(name = "medicamento", sequenceName = "SQ_T_MEDICAMENTO", allocationSize = 1)
+@Getter
+@Setter
 public class Medicamento {
 
     @Id
@@ -18,58 +23,18 @@ public class Medicamento {
     private String descricao;
 
     @NotBlank(message = "Precisa passar quantidade disponível!")
+    @Column(name = "quantidade_disponivel")
     private int quantidadeDisponivel;
 
     @NotBlank(message = "Valor obrigatório!")
     private double valor;
 
+    @Column(name = "precisa_receita")
     private boolean precisaReceita;
 
-    public int getId() {
-        return id;
-    }
+    private String categoria;
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public int getQuantidadeDisponivel() {
-        return quantidadeDisponivel;
-    }
-
-    public void setQuantidadeDisponivel(int quantidadeDisponivel) {
-        this.quantidadeDisponivel = quantidadeDisponivel;
-    }
-
-    public double getValor() {
-        return valor;
-    }
-
-    public void setValor(double valor) {
-        this.valor = valor;
-    }
-
-    public boolean isPrecisaReceita() {
-        return precisaReceita;
-    }
-
-    public void setPrecisaReceita(boolean precisaReceita) {
-        this.precisaReceita = precisaReceita;
-    }
+    @ManyToOne
+    @JoinColumn(name = "farmacia_id", referencedColumnName = "id")
+    private Farmacia farmacia;
 }

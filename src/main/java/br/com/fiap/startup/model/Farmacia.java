@@ -1,6 +1,8 @@
 package br.com.fiap.startup.model;
 
 import br.com.fiap.startup.Enums.FormasPagamento;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -10,6 +12,8 @@ import java.util.List;
 @Entity
 @Table(name = "farmacia")
 @SequenceGenerator(name = "farmacia", sequenceName = "SQ_T_FARMACIA", allocationSize = 1)
+@Getter
+@Setter
 public class Farmacia {
 
     @Id
@@ -17,6 +21,7 @@ public class Farmacia {
     private int id;
 
     @NotBlank(message = "razaoSocial obrigatória!")
+    @Column(name = "razao_social")
     private String razaoSocial;
 
     @Size(max = 18)
@@ -28,57 +33,15 @@ public class Farmacia {
     @JoinColumn(name = "endereco_id")
     private Endereco endereco;
 
+    @Column(name = "horario_funcionamento")
     private String horarioFuncionamento;
 
     @ElementCollection(targetClass = FormasPagamento.class)
     @Enumerated(EnumType.STRING)
+    @Column(name = "formas_pagamento")
     private List<FormasPagamento> formasPagamento;
 
-    public int getId() {
-        return id;
-    }
+    @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY, mappedBy = "farmacia")
+    private List<Medicamento> medicamentos;
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getRazaoSocial() {
-        return razaoSocial;
-    }
-
-    public void setRazaoSocial(String razaoSocial) {
-        this.razaoSocial = razaoSocial;
-    }
-
-    public String getCnpj() {
-        return cnpj;
-    }
-
-    public void setCnpj(String cnpj) {
-        this.cnpj = cnpj;
-    }
-
-    public Endereco getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(Endereco endereco) {
-        this.endereco = endereco;
-    }
-
-    public String getHorarioFuncionamento() {
-        return horarioFuncionamento;
-    }
-
-    public void setHorarioFuncionamento(String horarioFuncionamento) {
-        this.horarioFuncionamento = horarioFuncionamento;
-    }
-
-    public List<FormasPagamento> getFormasPagamento() {
-        return formasPagamento;
-    }
-
-    public void setFormasPagamento(List<FormasPagamento> formasPagamento) {
-        this.formasPagamento = formasPagamento;
-    }
 }

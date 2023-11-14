@@ -1,5 +1,9 @@
 package br.com.fiap.startup.model;
 
+import br.com.fiap.startup.Enums.Sexo;
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -8,6 +12,8 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "usuario")
 @SequenceGenerator(name = "usuario", sequenceName = "SQ_T_USUARIO", allocationSize = 1)
+@Getter
+@Setter
 public class Usuario {
 
     @Id
@@ -27,8 +33,12 @@ public class Usuario {
     @NotBlank(message = "senha obrigatória!")
     private String senha;
 
+    private Sexo sexo;
+
+    @Column(name = "usa_medicamento_diariamente")
     private boolean usaMedicamentoDiariamente;
 
+    @Column(name = "data_nascimento")
     private LocalDate dataNascimento;
 
     private String tratamento;
@@ -37,76 +47,4 @@ public class Usuario {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "endereco_id")
     private Endereco endereco;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-
-    public boolean isUsaMedicamentoDiariamente() {
-        return usaMedicamentoDiariamente;
-    }
-
-    public void setUsaMedicamentoDiariamente(boolean usaMedicamentoDiariamente) {
-        this.usaMedicamentoDiariamente = usaMedicamentoDiariamente;
-    }
-
-    public LocalDate getDataNascimento() {
-        return dataNascimento;
-    }
-
-    public void setDataNascimento(LocalDate dataNascimento) {
-        this.dataNascimento = dataNascimento;
-    }
-
-    public Endereco getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(Endereco endereco) {
-        this.endereco = endereco;
-    }
-
-    public String getTratamento() {
-        return tratamento;
-    }
-
-    public void setTratamento(String tratamento) {
-        this.tratamento = tratamento;
-    }
 }
