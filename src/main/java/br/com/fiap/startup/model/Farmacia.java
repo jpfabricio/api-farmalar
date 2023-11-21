@@ -1,6 +1,5 @@
 package br.com.fiap.startup.model;
 
-import br.com.fiap.startup.Enums.FormasPagamento;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -32,14 +31,6 @@ public class Farmacia {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "endereco_id")
     private Endereco endereco;
-
-    @Column(name = "horario_funcionamento")
-    private String horarioFuncionamento;
-
-    @ElementCollection(targetClass = FormasPagamento.class)
-    @Enumerated(EnumType.STRING)
-    @Column(name = "formas_pagamento")
-    private List<FormasPagamento> formasPagamento;
 
     @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY, mappedBy = "farmacia")
     private List<Medicamento> medicamentos;

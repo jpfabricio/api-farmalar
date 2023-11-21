@@ -32,7 +32,7 @@ public class Medicamento {
     @Column(name = "precisa_receita")
     private boolean precisaReceita;
 
-    private String categoria;
+    private String patologia;
 
     @ManyToOne
     @JoinColumn(name = "farmacia_id", referencedColumnName = "id")

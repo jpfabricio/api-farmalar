@@ -23,10 +23,6 @@ public class Usuario {
     @NotBlank(message = "Nome obrigatório!")
     private String nome;
 
-    @Size(max = 14)
-    @NotBlank(message = "cpf obrigatório!")
-    private String cpf;
-
     @NotBlank(message = "email obrigatório!")
     private String email;
 
@@ -35,16 +31,6 @@ public class Usuario {
 
     private Sexo sexo;
 
-    @Column(name = "usa_medicamento_diariamente")
-    private boolean usaMedicamentoDiariamente;
-
     @Column(name = "data_nascimento")
     private LocalDate dataNascimento;
-
-    private String tratamento;
-
-    @NotBlank(message = "cnpj obrigatório!")
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "endereco_id")
-    private Endereco endereco;
 }
