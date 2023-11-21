@@ -40,7 +40,6 @@ public class UsuarioController {
 
     @PostMapping
     public Usuario cadastrar(@RequestBody Usuario usuario){
-        verificaCpf(usuario.getCpf());
         return usuarioRepository.save(usuario);
     }
 
