@@ -1,5 +1,6 @@
 package br.com.fiap.startup.controller;
 
+import br.com.fiap.startup.DTO.UsuarioLoginDTO;
 import br.com.fiap.startup.exception.BadRequest;
 import br.com.fiap.startup.exception.NotContent;
 import br.com.fiap.startup.exception.NotFound;
@@ -34,13 +35,24 @@ public class UsuarioController {
     }
 
     @GetMapping("email/{email}")
-    public List<Usuario> buscarPeloEmail(@PathVariable String email) {
-        return usuarioRepository.findByEmail(email);
+    public Usuario buscarPeloEmail(@PathVariable String email) {
+        return usuarioRepository.findByEmail(email).orElseThrow(() -> new NotContent("Usuario não encontrado."));
     }
 
     @PostMapping
     public Usuario cadastrar(@RequestBody Usuario usuario){
+        verificaSeJaExiste(usuario);
         return usuarioRepository.save(usuario);
+    }
+
+    @PostMapping("login")
+    public void login(@RequestBody UsuarioLoginDTO usuarioLoginDTO){
+        Usuario usuario = usuarioRepository.findByEmail(usuarioLoginDTO.getEmail())
+                .orElseThrow(() -> new NotContent("Usuario não encontrado."));
+        if (!usuarioLoginDTO.getSenha().equals(usuario.getSenha())){
+            throw new BadRequest("Senha incorreta.");
+        }
+
     }
 
 
@@ -59,10 +71,16 @@ public class UsuarioController {
         }
     }
 
-    public void verificaCpf(String cpf){
+    private void verificaCpf(String cpf){
         if (!cpf.contains(".") || !cpf.contains("-")){
             System.out.println("O cpf deve estar no padrão xxx.xxx.xxx-xx");
             throw new BadRequest("O cpf deve estar no padrão xxx.xxx.xxx-xx");
+        }
+    }
+
+    private void verificaSeJaExiste(Usuario usuario){
+        if (usuarioRepository.findByEmail(usuario.getEmail()).isPresent()){
+            throw new BadRequest("Usuario ja cadastrado");
         }
     }
 

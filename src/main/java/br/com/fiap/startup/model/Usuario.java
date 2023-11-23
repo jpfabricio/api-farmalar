@@ -23,6 +23,7 @@ public class Usuario {
     @NotBlank(message = "Nome obrigatório!")
     private String nome;
 
+    @Column(unique = true)
     @NotBlank(message = "email obrigatório!")
     private String email;
 
