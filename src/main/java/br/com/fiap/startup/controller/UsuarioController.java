@@ -71,13 +71,6 @@ public class UsuarioController {
         }
     }
 
-    private void verificaCpf(String cpf){
-        if (!cpf.contains(".") || !cpf.contains("-")){
-            System.out.println("O cpf deve estar no padrão xxx.xxx.xxx-xx");
-            throw new BadRequest("O cpf deve estar no padrão xxx.xxx.xxx-xx");
-        }
-    }
-
     private void verificaSeJaExiste(Usuario usuario){
         if (usuarioRepository.findByEmail(usuario.getEmail()).isPresent()){
             throw new BadRequest("Usuario ja cadastrado");

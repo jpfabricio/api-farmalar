@@ -33,9 +33,18 @@ public class FarmaciaController {
         }
     }
 
+    @GetMapping("razaoSocial/{razaoSocial}")
+    public Farmacia buscaPorRazaoSocial(@PathVariable String razaoSocial) {
+        Optional<Farmacia> farmacia = farmaciaRepository.findByRazaoSocial(razaoSocial);
+        if (farmacia.isPresent()) {
+            return farmacia.get();
+        } else {
+            throw new NotContent("Farmacia não encontrada.");
+        }
+    }
+
     @PostMapping
     public Farmacia cadastrar(@RequestBody Farmacia farmacia){
-        verificaCnpj(farmacia.getCnpj());
         return farmaciaRepository.save(farmacia);
     }
 
@@ -52,13 +61,6 @@ public class FarmaciaController {
             farmaciaRepository.deleteById(id);
         } catch (Exception e) {
             throw new NotFound("Não existe farmacia com este id.");
-        }
-    }
-
-    public void verificaCnpj(String cnpj){
-        if (!cnpj.contains(".") || !cnpj.contains("-") || !cnpj.contains("/")){
-            System.out.println("O cnpj deve estar no padrão xx.xxx.xxx/xxxx-xx");
-            throw new BadRequest("O cnpj deve estar no padrão xx.xxx.xxx/xxxx-xx");
         }
     }
 }

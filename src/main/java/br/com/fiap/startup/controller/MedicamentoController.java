@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +22,15 @@ public class MedicamentoController {
     @GetMapping
     public List<Medicamento> listar() {
         return medicamentoRepository.findAll();
+    }
+
+    @GetMapping("filtros")
+    public List<Medicamento> listarfiltrado(@RequestParam List<String> filtros) {
+        List<Medicamento> medicamentos = new ArrayList<>();
+        filtros.forEach(filtro -> {
+            medicamentos.addAll(medicamentoRepository.findByPatologia(filtro));
+        });
+        return medicamentos;
     }
 
     @GetMapping("{id}")
@@ -54,6 +64,15 @@ public class MedicamentoController {
     public void remover(@PathVariable int id) {
         try{
             medicamentoRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new NotFound("Não existe medicamento com este id.");
+        }
+    }
+
+    @DeleteMapping
+    public void limpaMedicamentos() {
+        try{
+            medicamentoRepository.deleteAll();
         } catch (Exception e) {
             throw new NotFound("Não existe medicamento com este id.");
         }

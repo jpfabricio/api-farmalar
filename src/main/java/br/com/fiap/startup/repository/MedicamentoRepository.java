@@ -11,4 +11,6 @@ public interface MedicamentoRepository extends JpaRepository<Medicamento, Intege
 
     List<Medicamento> findByNome(String nome);
 
+    List<Medicamento> findByPatologia(String patologia);
+
 }

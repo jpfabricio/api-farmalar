@@ -33,5 +33,5 @@ public class Usuario {
     private Sexo sexo;
 
     @Column(name = "data_nascimento")
-    private LocalDate dataNascimento;
+    private String dataNascimento;
 }
